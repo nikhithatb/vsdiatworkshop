@@ -31,7 +31,7 @@ Introduction to OpenLANE detailed ASIC design flow
 ### Tool Interface
 VM Virtual Box
 
-#### Part1: Sky_Lab1 - OpenLANE Directory Structure 
+### Part1: Sky_Lab1 - OpenLANE Directory Structure 
 
 #### Files to run the workshop are all present in the tools directory under the Desktop folder
 
@@ -169,11 +169,19 @@ Some of the reports are shown below
  > Violated slack
  
  ![Screenshot 2023-05-31 130727](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/485c7504-8cc1-4ecf-abd0-55c61e51cb92)
+ 
+ ## Day 2 – OpenLANE and Sky130PDK - Good Floorplan vs Bad Floorplan
+ 
+  Theory
+ 
+ ###  Foorplaning  considerations
 
 
 
+### Part 2: Lab2 -Steps to run floorplan using OpenLANE
+> openlane directory , we can go to configuration folder where we can see for the .tcl files for floorplan, placement and cts stages as well as README.md file where we can check for the variables of all these stages that are required.
 
-
+![Screenshot 2023-06-01 092904](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/4a3860b5-be37-493f-b498-1b03d693db8f)
 
 
 
