@@ -183,6 +183,79 @@ Some of the reports are shown below
 
 ![Screenshot 2023-06-01 092904](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/4a3860b5-be37-493f-b498-1b03d693db8f)
 
+![Screenshot 2023-06-01 094005](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/1dd285c2-9176-4fde-8048-ed3667c2b7cb)
+
+![Screenshot 2023-06-01 094111](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/d5e89a43-1a9c-4609-aa33-e313644a94b7)
+
+#### Where are the switches set?
+
+> The "set" values for the variables in each stages are the system default values in the specific .tcl file. Below shown is the floorplan.tcl file.
+
+![Screenshot 2023-06-01 095358](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/a3dea347-7eeb-4c58-a1a7-5f91209643ec)
+
+#### Precedence of .tcl files
+
+> Here the lowest prioroty is the system default i.e., the "floorplan.tcl" file settings , after that "config.tcl" and the next is "sky130A_sky130_fd_sc_hd_config.tcl"
+
+### Running the floorplan with the system default values
+
+> After running the "run_floorplan" folder in the openlane prompt window , we can check the reports, results and log files under "runs" folder as shown below.
+
+> 4-ioplacer.log file
+
+![Screenshot 2023-06-01 100620](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/409c6b90-471a-4ea3-867a-1b67d8dc97f3)
+
+> pdn.log file
+
+![Screenshot 2023-06-01 100703](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/00a5cb24-2cfc-4fcd-af0f-a32d05ac4c8c)
+
+>  picorv32a.floorplan.def file - using the die area x and y coordinates we can calculate teh die area.
+
+![Screenshot 2023-06-01 100912](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/ac21f3f4-9d1a-49c4-bffc-3eaa84f4abfa)
+
+The below snapshot shows the the statement I mentioned above as the  "sky130A_sky130_fd_sc_hd_config.tcl" overrides the core utilization of config.tcl file.
+
+![Screenshot 2023-06-01 115348](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/517ace40-f0e6-4b15-9ebf-8d3c096a98d7)
+
+![Screenshot 2023-06-01 114717](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/ab05686f-0534-40bb-ac65-b51765bae009)
+
+### Opening Magic
+ The command to open Magic is shown below
+ 
+ ![Screenshot 2023-06-01 120852](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/2a62836d-1eb6-4e82-82b3-87a0cf7698ab)
+ 
+ > Magic is opened
+ 
+ ![Screenshot 2023-06-01 120919](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/13168890-e52c-4224-a3dd-45dcf17d94df)
+
+ > When we zoom in and see , we can see the decap cells and standard cells.
+  
+  ![Screenshot 2023-06-01 124731](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/a6164db4-606e-4f92-87ad-09f78506b473)
+
+  ![Screenshot 2023-06-01 124612](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/f62ac50c-ddf8-44b9-be30-7092bb132269)
+  
+  
+  ### Placement Stages
+   > Global Placment    - Coarse placement without legalization and in openlane the main criteria for global placement stage is reducing the wirelength also called as half paramenter wire length (hpwl).
+   > Detailed Placement - legalization happens in the detailed placement i.e., standard cells are placed in  standard cell rows , without overlapping with each   other.
+   
+   Here I am doing the condition related placement not concentrating on the timing , to ensure the congestion is less
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
