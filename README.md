@@ -274,6 +274,175 @@ The below snapshot shows the the statement I mentioned above as the  "sky130A_sk
  > To do that we can do as shown below by setting as 2 and the run the floorplan again.
  
  ![Screenshot 2023-06-01 220858](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/6acae1c9-f54e-4f28-9bf0-eb73a1ddf96c)
+ 
+ > When we open magic layout window and observe, and are not equidistant anymore, they are stacked upon one another.
+ 
+ ![Screenshot 2023-06-02 103446](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/5420112f-eb56-4045-9df4-a4b3f95b5494)
+ 
+ ![Screenshot 2023-06-02 103551](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/17026dfa-2957-497a-8ec3-8ff6a1b8e7b0)
+ 
+ #### Git steps to clone the inverter design from the git repo link https://github.com/nickson-jose/vsdstdcelldesign which has pmos, nmos and inverter sky130 spice models, custom made by Nickson Jose.
+ 
+ > step1: Go to the git repo link and click the top right "code" menu
+ 
+ > step2: Copy the https:// url 
+ 
+ > step3: Paste it in the ubuntu terminal window under openlane directory with the below command
+ 
+   git clone https://github.com/nickson-jose/vsdstdcelldesign.git
+  
+ > Once you clone it should appear as below
+ 
+ ![Screenshot 2023-06-02 111016](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/cc01c1d1-1c6f-46ad-a1f3-0e98c8150339)
+ 
+ > Once you open the vsdstdceldesign folder you can all the files which are cloned from the git repo shown above
+ 
+ ![Screenshot 2023-06-02 111320](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/ed8d92cc-b24f-489f-9172-4169f505413a)
+ 
+ #### Lb introduction to sky130 basic layers layout and LEF using inverter.
+ 
+ > The next thing we should do is open the .mag folder and see how many layers are there for building an inverter , we will be performing spice extraction as well as the post-layout spice simulations.
+
+> Before we open the mag file, we need the magic tech file to open this. For that we can copy the magic tech file in the "vsdstdcelldesign" folder. To do this, we should first copy the magic tech file from magic directory
+
+![Screenshot 2023-06-02 112314](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/e2d2d594-9c47-4216-8734-90511443109b)
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/29bd90f2-1fda-4198-8193-b039bd97cc7a)
+
+ As you can see it is copied inside vsdstdcelldesign directory.
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/6ea9f03a-2370-4fe8-a047-7716ba307adb)
+
+> And the we open the magic window by typing this command 
+
+![Screenshot 2023-06-02 113411](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/0374fa15-7a79-499a-8061-ce6a1fc5e956)
+
+> The layout of the inverter opens here
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/e8ad5154-139e-40e1-a9fc-c775c6a9a51d)
+
+> Inside the magic layout window , if we want to see how the layers are connected to the gate(polysilicon) with the pmos and nmos diffusion layer , we can select the portion on the layout by clicking 's' on the invereter cell and type 'what' in the tcl window.
+
+![Screenshot 2023-06-02 114653](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/f8af7bb2-772a-4522-9c6d-4fb15acf6fca)
+
+> On the right corner we can see different color palattes where there are different colors for different layers of the layout design.
+
+> Next we will check whether the drain of pmos and drain of nmos are connected or not.
+
+> To check if the output 'y' is connected to the drain of pmos and the drain of nmos.
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/791911c1-52f0-44b5-a51b-a9b69a482c2f)
+
+> To check if the source of the pmos is connected to vdd we select the contact of the source and then check.
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/2bd29811-30be-4d82-8726-bbd8f1ee547f)
+
+> To check if the nmos is connected to ground , we do the same by selecting the contact of the source of nmos. 
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/7624499f-0e3d-46db-b0b0-eacf6b1adb8e)
+
+#### Lab steps to create standard cell layout and extract spice netlist
+
+#### Creation of a standard cell in magic layout
+
+To create a bounding box in Magic with the specified dimensions, you can follow these steps:
+
+1. Open the Magic tool and invoke the sky130 technology file by running the command:
+
+   magic -T sky130A.tech
+ 
+
+2. In the Magic tkcon window, type the following command to create the bounding box:
+  
+   property FIXED_BBOX {0 0 138 272}
+
+   This command sets the fixed bounding box with the given dimensions. The values {0 0} represent the bottom-left coordinates of the bounding box, and the values {138 272} represent the top-right coordinates. The width of the bounding box is set to 138, which is 3 times the width of the standard cell (0.46 * 3 = 1.38). The height is set to the height of the standard cell, which is 272.
+
+3. After entering the command, press Enter. The bounding box will be created with the specified dimensions.
+
+Now you have successfully created a bounding box in Magic with a width of 1.38 (3 times the width of the standard cell) and a height of 2.72 (height of the standard cell). You can proceed with your layout design within this bounding box.
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/965a173c-ab8e-482f-97bd-08e41bef1453)
+
+To proceed with defining the ground and power segments, contacts, and the layout of the logic part in the standard cell layout design using Magic, you can follow these steps:
+
+1. Define Ground and Power Segments:
+
+   - In the Magic tkcon window, select the metal layer 1 (M1) for defining the ground and power segments. Use the command:
+     
+     layer M1
+     
+
+   - To define the ground segment, draw a rectangle by specifying its coordinates using the `box` command. For example:
+     
+     box 0 0 138 20
+     
+     This command creates a rectangle from coordinates (0, 0) to (138, 20) on the M1 layer, representing the ground segment.
+
+   - Similarly, define the power segment using the `box` command. For example:
+     
+     box 0 252 138 272
+     
+     This command creates a rectangle from coordinates (0, 252) to (138, 272) on the M1 layer, representing the power segment.
+
+2. Define Contacts:
+
+   - Switch to the contact layer (typically via M1 stack) using the command:
+    
+     layer contact
+    
+   - To define a contact for the ground segment, use the `box` command to draw a rectangle at the appropriate location. For example:
+    
+     box 130 0 138 8
+    
+     This command creates a contact rectangle from coordinates (130, 0) to (138, 8) on the contact layer, representing the contact for the ground segment.
+
+   - Similarly, define a contact for the power segment using the `box` command. For example:
+     
+     box 130 264 138 272
+     
+     This command creates a contact rectangle from coordinates (130, 264) to (138, 272) on the contact layer, representing the contact for the power segment.
+
+3. Layout of the Logic Part:
+
+   - Switch to the desired layer for drawing the logic part layout (typically M1) using the command:
+   
+     layer <desired_layer>
+
+   - Now, you can draw the layout of the logic part of the standard cell using various commands, such as `rect`, `poly`, and `wire`. These commands allow you to define shapes, polygons, and wires respectively, based on the desired circuit design.
+
+   - Specify the coordinates and dimensions of the logic part components using the appropriate commands. For example:
+
+     rect 20 30 40 60
+ 
+     This command creates a rectangle at coordinates (20, 30) with a width of 40 and height of 60 on the specified layer.
+
+   - Continue defining the layout of the logic part as per your circuit design requirements, using the relevant commands to create shapes, polygons, and wires.
+
+By following these steps, you can define the ground and power segments, contacts, and layout of the logic part for any standard cell layout in Magic. Remember to switch between the appropriate layers using the `layer` command based on the element you want to define or draw.
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/ca25aad5-82c5-411b-82a2-db3efbe10d00)
+
+> We can check and modify the drc errors in the magic window by clicking on 'DRC' menu and select 'DRC find next error'
+
+#### How to extract the inverter layout in ngspice
+
+> Step 1: To create ngspice file
+
+To extract the inverter in ngspice, all we need to do is write the 'extract all' in tkcon.tcl window and we can see the ext file and check in the 'vsdstdcelldesign' directory.
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/e92f60dc-2ff5-4a1e-9666-ac5176f46f46)
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/f78cf8cc-9801-4b93-bcff-4053d887e265)
+
+
+
+
+
+
+
+
+
 
  
 
