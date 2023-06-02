@@ -201,6 +201,8 @@ Some of the reports are shown below
 
 > After running the "run_floorplan" folder in the openlane prompt window , we can check the reports, results and log files under "runs" folder as shown below.
 
+run_floorplan
+
 > 4-ioplacer.log file
 
 ![Screenshot 2023-06-01 100620](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/409c6b90-471a-4ea3-867a-1b67d8dc97f3)
@@ -224,22 +226,59 @@ The below snapshot shows the the statement I mentioned above as the  "sky130A_sk
  
  ![Screenshot 2023-06-01 120852](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/2a62836d-1eb6-4e82-82b3-87a0cf7698ab)
  
- > Magic is opened
+ > Magic is opened for floorplan
  
- ![Screenshot 2023-06-01 120919](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/13168890-e52c-4224-a3dd-45dcf17d94df)
+ ![Screenshot 2023-06-01 203406](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/c7f29904-feb7-4a47-b2af-c6cf2ad707fc)
 
- > When we zoom in and see , we can see the decap cells and standard cells.
+ > When we zoom in and see , we can see the decap cells ,IO pins and standard cells.
   
-  ![Screenshot 2023-06-01 124731](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/a6164db4-606e-4f92-87ad-09f78506b473)
+  ![Screenshot 2023-06-01 203224](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/5c9ef3d5-7fc6-4a3f-8d7f-ea8b03eeed56)
 
   ![Screenshot 2023-06-01 124612](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/f62ac50c-ddf8-44b9-be30-7092bb132269)
   
   
   ### Placement Stages
-   > Global Placment    - Coarse placement without legalization and in openlane the main criteria for global placement stage is reducing the wirelength also called as half paramenter wire length (hpwl).
+   > Global Placment    - Coarse placement without legalization and in openlane the main criteria for global placement stage is reducing the wirelength also called as half paramenter wire length (HPWL).
+   
    > Detailed Placement - legalization happens in the detailed placement i.e., standard cells are placed in  standard cell rows , without overlapping with each   other.
    
-   Here I am doing the condition related placement not concentrating on the timing , to ensure the congestion is less
+   > Here I am doing the condition related placement not concentrating on the timing , to ensure the congestion is less.
+
+   #### Placement is completed by running the command "run_placement" in the openlane prompt terminal
+   
+    run_placement
+   
+   ![Screenshot 2023-06-01 194501](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/22bbb723-f0ad-42b3-97aa-41ede139bab2)
+   
+   #### Opening Magic
+   
+     The command to open Magic after placement step is shown below
+    
+    ![Screenshot 2023-06-01 194841](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/57621be9-82a9-4a5f-90a9-86742bbf687b)
+    
+     > Magic is opened for placement
+     
+     ![Screenshot 2023-06-01 214443](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/494f4cf5-3b43-4912-bb85-3261492baceb)
+
+      > When we zoom in and see , we can see the standard cells are placed in rows and there are no DRCs.
+     
+     ![Screenshot 2023-06-01 214942](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/61f6c3aa-303e-4fbe-ad81-c32650ccac2b)
+
+
+ ### Day3  – OpenLANE and Sky130PDK - Design Library Cell Uisng Magic Layout and ngspice Characterization
+ 
+ #### IO placer revision
+ 
+ > The IO pins are placed at the equidistant places in the floorplan , if we want to change the distance , we need to change the value in the floorplan.tcl file  under configuration folder for the IO mode.
+ 
+ > To do that we can do as shown below by setting as 2 and the run the floorplan again.
+ 
+ ![Screenshot 2023-06-01 220858](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/6acae1c9-f54e-4f28-9bf0-eb73a1ddf96c)
+
+ 
+
+
+   
   
   
 
