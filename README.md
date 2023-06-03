@@ -435,6 +435,26 @@ To extract the inverter in ngspice, all we need to do is write the 'extract all'
 
 ![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/f78cf8cc-9801-4b93-bcff-4053d887e265)
 
+> Step 2: To extract spice file inside the vsdstdcelldesign directory we should give the following command
+
+![Screenshot 2023-06-02 144947](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/f0d1b5b1-f7ec-4432-b572-0f1456a3343c)
+
+ When we open the spice file it has as shown below
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/c771adf7-ac1e-4419-8ee5-d28c2c49922f)
+
+#### Lab steps to create final SPICE deck using SKY130 tech
+
+ When you open the spice file which is extracted and modify the file by giving inputs as pshort , nshort library model files , source, ground and setting the grid values with trainsient analysis we have seen in the magic window before running it in the ngspice file. The modified file is shown below.
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/d518fbf4-9b92-4de5-81f4-5ccb6f1bb0d6)
+
+> The model file looks like this
+
+
+
+
+
 
 
 
