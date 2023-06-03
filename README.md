@@ -449,7 +449,171 @@ To extract the inverter in ngspice, all we need to do is write the 'extract all'
 
 ![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/d518fbf4-9b92-4de5-81f4-5ccb6f1bb0d6)
 
-> The model file looks like this
+> The model file looks like this. The below shown is the 'pshort.lib' model file
+
+![Screenshot 2023-06-03 105635](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/380d6a91-6ff6-4cf0-a7a0-7e409dbd3fc7)
+
+> After running the ngspice with the spice file, we get the output like this
+
+![Screenshot 2023-06-03 105518](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/023f36d1-b8af-4c74-b111-60a264dc0dd6)
+
+#### Lab steps to chracterize inverter using SKY130 model files
+
+> To check the plot we need to type "plot y vs time a". Here y is the output, time is the time period and a is the input.
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/3ffd5f75-ffaa-4e1f-8e50-ba4b80956c80)
+
+Here the spikes are showing on the plotted pulse, to overcome that we need to change the Cload in the "sky130_inv.spice"as higher value than the previos one, I changed to 2fF. Now the plot like below, some what better compared to the previous one.
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/eb625570-bdb0-4784-a6e4-fd6aedb036e1)
+
+Next step is to charcetize the cell that means to find the value of four parameters 1. Rise Transition (output rise 20%-80%) 2. Fall Transition(output fall 80%-20%) 3.Fall cell delay 4.Rise cell delay also called the propogation delay. 
+
+> For Rise Transition, the 20% of 3.3V is 0.64
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/cabbc52e-8163-4316-8148-441e07a26674)
+
+![Screenshot 2023-06-03 112037](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/f18639fe-36cc-4b2e-9947-878be2d4f717)
+
+
+> For Rise Transition, the 80% of 3.3V is 2.64
+
+![Screenshot 2023-06-03 112351](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/fea67921-7c89-49e2-ab9e-1a5d3b695815)
+
+![Screenshot 2023-06-03 112330](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/dc2f1d06-7071-4c29-8152-8585b2dadb8a)
+
+Therefore the Rise transition for the above plot is 2.245-2.181 = 0.064ns
+
+> Similarly for fall transition , from 80%-20%
+
+For 80%, the fall transition is
+
+![Screenshot 2023-06-03 113523](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/77d90d33-60cd-4b4c-b151-7129d1bba9d2)
+
+For 20%, the fall transition is
+
+![Screenshot 2023-06-03 113626](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/bf1b71a3-be68-4863-b7d0-7c21964ec9b8)
+
+Therefore the Fall transition for the above plot is 0.04ns
+
+> Cell rise delay at 50% of 3.3V is 1.64V , therefore the output and input at 50% is shown below
+
+![Screenshot 2023-06-03 114304](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/4ef01af6-1694-4f27-9f0b-0c569dbdf11a)
+
+Therefore 2.2132-2.1498 = 0.0634ns is the cell rise delay.
+
+> Cell fall delay at 50% of 3.3V is 1.64V , therefore the output and input at 50% is shown below
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/aa779c09-83aa-4c93-a0c1-021d9bd2e339)
+
+Therefore 4.09-4.07 = 0.02ns is the cell fall delay.
+
+> Next objective is to use the inverter layout to create a  LEF file and this LEF file will be used in the openlane and plug-in this cell by making a custom cell uing a custom link. We will plug this cell in picorv32 core and see the openlane takes this input or not.
+
+#### Lab introduction to Magic tool options and DRC rules.
+
+### Intrdocution to Magic 
+* In-depth knowledge of Magic's DRC engine
+* Introduction to Google Skywater DRC rules
+* Lab: warm-up exercise : Fix a simple rule error
+* Lab: Main exercise : Fix or create a complex error
+
+* The documentation URL for Magic DRC is http://opencircuitdesign.com/magic
+  > Two main guides for magic is "using magic"  and technology files
+
+* To read the skywater pdk documentation and understand the design rules we can follow this link https://skywater-pdk.readthedocs.io/en/main/ and    https://github.com/google/skywater-pdk.
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/65a15860-0b76-4856-a3fb-8462921e9e85)
+
+> We can click on the rules specified in this docs and can be used for the layouts that are used in the labs
+
+When we see inside the open_pdk drc files after the extraction using "tar xfz drc_tests.tgz" we can see the complete information about the magic layout for this lab.
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/52769c34-2663-45a7-a1d8-51f4a93ada52)
+
+> To look into the magicrc file you can open and see what is inside of it
+
+#### Starting the Magic
+
+> magic -d XR  It is the command to start the magic for better graphics 
+
+First we can check the simple example failing set of rules of metal 3 layer by either typing the command 
+
+magic -d XR metal3.mag
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/ec920ae6-35a1-4d34-b625-095f95c803b7)
+
+or from the magic window "menu - file - open -load file9here, metal3.mag".
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/50feb95c-eb8c-4021-87cc-72e57eea0d9b)
+
+We can look for the rules from https://skywater-pdk.readthedocs.io/en/main/ for each of them. Here for metal 3 the rules can be seen as below from the link.
+
+> Under the 'Design rules' content go to 'periphery rules', from there we can click on metal 3 rule button and you can see like this below
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/2ec55e57-62ba-4066-b421-9fb03b3e6a43)
+
+> To look on the area of the metal 3 opened in the magic window , click 'left mouse button' and then 'right mouse button' drag the box by clicking right mouse button and then click 'column (: or ;)' and type 'drc why'.
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/8900b3c1-27d5-4ad5-b2d3-64e50c10d46f)
+
+1. Start by hovering your mouse pointer over the M3 contact icon on the side toolbar. This will allow you to draw a large area of M3 contact on the layout.
+
+2. Once you have drawn the M3 contact area, a cursor box will appear around it.
+
+3. Now, type the command "cif see VIA2" to create contact cuts represented as black square shapes. These contact cuts don't physically exist on the drawn layout but are used as a mask layer called VIA2, which will be included in the GDS (Graphic Data System) file.
+
+4. Additional details about these contact cuts can be found in the CIF output section of the tech file.
+
+5. The current view is the feedback entry. You can dismiss it by using the command "feed clear".
+
+6. To ensure accurate placement, use the internal snap command "snap int" for the cursor to move along the edge of the grid.
+
+7. There are specific spacing rules to follow. For example, the spacing between VIA2 and Metal 3 should be 0.065u.
+
+8. To measure the distance, position the cursor between the contact cut and the drawn via edge, then click the box in the "tkcon" command. This will provide the distance between them.
+
+9. The tool will automatically handle the placement and spacing of the contact cuts, ensuring there are no Design Rule Check (DRC) errors, and the distance will not be smaller than the specified value.
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/ab03a3ea-c5f9-4dff-a1f1-2d7ca2acb1b7)
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/52c4ff26-9a68-4547-9e7e-4bf57fc86bb1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
