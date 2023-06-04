@@ -579,6 +579,70 @@ We can look for the rules from https://skywater-pdk.readthedocs.io/en/main/ for 
 
 ![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/52c4ff26-9a68-4547-9e7e-4bf57fc86bb1)
 
+### Lab : To fix poly.9 error in sky130 tech-file
+
+Steps to fil poly.9 error in sky130 tech-file
+
+1. Start by loading the "poly.mag" file in the tkcon window. You can do this using the command "load poly.mag".
+
+2. Use the mouse cursor to locate the area where the error is occurring. In this case, it is the violation of "Poly.9" due to spacing between "polyres" and "poly" layers.
+
+3. Open the technology file, "sky130A.tech", and search for any existing design rule check (DRC) rules related to "Poly.9". Determine if a rule for the spacing between "polyres" and "poly" layers already exists.
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/e12e6fff-209a-4d98-9275-bea2dfe66e76)
+
+4. If there is no existing rule for the spacing between "polyres" and "poly", create a new rule in the technology file. Define the required spacing between these layers. This rule will ensure proper spacing for all instances of "polyres" and "poly".
+
+5. Once you have modified the technology file to include the new rule, load the updated file in the tkcon window using the command "tech load sky130A.tech".
+
+6. The design tool might not automatically perform a DRC check after loading the technology file. Therefore, manually initiate a DRC check to verify if the modifications have resolved the spacing violation. Use the command "drc check" to run the DRC check.
+
+7. After the DRC check, you might find that the spacing violation between "polyres" and "poly" has been resolved. However, it is possible that the spacing between "poly" and "tap/diff" layers is now violated.
+
+8. To address this new violation, modify the technology file to include the necessary spacing rule between "poly" and "tap/diff" layers.
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/6f8e41b7-ade2-4ab0-b7a2-4c9d9326c01c)
+
+9. Load the updated technology file again in the tkcon window using the command "tech load sky130A.tech".
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/246e3e57-5911-407b-9ba7-0c7f4bcc320a)
+
+10. Perform another DRC check to ensure that all spacing violations, including the ones between "polyres" and "poly" as well as "poly" and "tap/diff", have been resolved.
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/78ad9691-b01f-426e-94b7-778ae9e9ab0a)
+
+By following these steps, you should be able to resolve the spacing violations and ensure that the design meets the required design rules for the "polyres," "poly," and "tap/diff" layers.
+
+### Lab4 Pre-Layout Timing analysis and importance of good clock tree
+
+#### Timing modelling using delay tables
+
+##### Lab steps to convert grid info to track info
+
+> Next objective is to use the inverter layout to create a  LEF file and this LEF file will be used in the openlane and plug-in this cell by making a custom cell uing a custom link. We will plug this cell in picorv32 core and see the openlane takes this input or not.
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/82b46fc7-39de-4ee2-9fcc-d76db3afb3ce)
+
+#### Tracks
+
+The width and height of a standard cell should be odd multiples of the horizontal track pitch and vertical track pitch. This information is specified using the following syntax in the "tracks.info" file:
+
+metallayer direction offset spacing
+li1 X 0.23 0.46
+li1 Y 0.17 0.34
+
+In the above syntax, "li1" represents the metal layer. The "X" and "Y" denote the direction of the tracks, where "X" refers to the horizontal direction and "Y" refers to the vertical direction.
+
+The "offset" value indicates the starting position of the first track, and the "spacing" value represents the distance between adjacent tracks.
+
+For example, in the "li1 X 0.23 0.46" line, it means that for the metal layer "li1" in the horizontal direction, the offset of the first track is 0.23 units, and the spacing between tracks is 0.46 units.
+
+Similarly, in the "li1 Y 0.17 0.34" line, it means that for the metal layer "li1" in the vertical direction, the offset of the first track is 0.17 units, and the spacing between tracks is 0.34 units.
+
+By adhering to these specifications, the standard cell's width and height will be ensured to be odd multiples of the horizontal and vertical track pitches, respectively.
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/032c63e9-b0ea-4d39-bfcc-ac6b5986afe7)
+
 
 
 
