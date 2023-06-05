@@ -643,6 +643,70 @@ By adhering to these specifications, the standard cell's width and height will b
 
 ![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/032c63e9-b0ea-4d39-bfcc-ac6b5986afe7)
 
+#### To determine if the I/O ports are located at an intersection, follow these steps on the TKCON window:
+
+Activate the grid by pressing 'G' on the magic console.
+
+Set the grid size to the desired dimensions, such as 0.46um, 0.34um, 0.23um, or 0.17um.
+
+Locate the I/O ports in the LI1 layer.
+
+Check if the I/O ports align at the intersection points on the grid.
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/03c64363-5bde-4773-bf1c-7c0fe9c79c89)
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/22147e4c-b89d-4587-8ba7-a230e2ce8f99)
+
+#### Lab steps to convert magic layout to std cell layout
+
+### Create Port Definition
+
+Open the Magic Layout window and source the .mag file for the design, such as the inverter.
+
+Navigate to the "Edit" menu and select "Text." This action will open a dialogue box for entering text.
+
+Double press the 'S' key while the cursor is positioned at the I/O labels. This action automatically populates the text with the string name and size information of the port.
+
+> In the figure below, the number specified in the text area adjacent to the enable checkbox determines the sequencing of the ports when they are written in the LEF file. The number assigned to each port represents its order, starting from 0 as the first port in the list.
+
+By following these steps, you can define ports for the macro cell in the Magic console and proceed with the LEF extraction process.
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/f4a81348-8772-4e77-8055-0404b27d6034)
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/0397f74b-1377-4813-8028-67ae2efdded0)
+
+> To determine the connectivity of the ground and power layers from the metal1 layer, follow these steps:
+
+In the Magic window, create a box or rectangle over the areas designated as VPWR (power) and VGND (ground).
+
+Switch to the TKCON window.
+
+Use the appropriate command in the TKCON window to check the connectivity of the ground and power layers from the metal1 layer.
+
+By performing these steps, you can verify the connectivity of the ground and power layers and ensure that they are either the same or different from the signal layer.
+
+![Screenshot 2023-06-05 124428](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/ae6db668-025b-4a34-9196-89dc327981bb)
+
+![Screenshot 2023-06-05 124512](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/368e5423-d256-4829-9ba6-6e5dd6169d2d)
+
+> After this we need to save the layout as "save sky130_vsdinv.mag" in tkcon console. When you type ls-ltr inside the vsdstdcelldesign directory , we can see the saved mag file.
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/9b8ea5b7-cb79-4f22-bc87-3f756079ce47)
+
+After doing this we need to create a lef file for this layout , for this open layout "sky130_vsdinv.mag" and type "lef write" in tkcon window. 
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/225eaf4c-0eaa-4ea8-8228-ad57f2890a1b)
+
+when we open it we can see what all changes we did during port definition
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/92cfc8e5-07a6-450b-ba5c-c03b1c52d415)
+
+
+
+
+
+
+
 
 
 
