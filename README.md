@@ -805,6 +805,9 @@ Before running the CTS in the TritonCTS tool, it's important to check if the sla
 
 run_cts
 
+![Screenshot 2023-06-06 102915](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/253e6b9f-8dab-4028-bfa8-ffa6d68f9f03)
+
+
 After the CTS run, the slack values are obtained. For example:
 
 Setup slack: 4.33
