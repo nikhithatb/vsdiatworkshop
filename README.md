@@ -760,6 +760,24 @@ Floor plan stage:
 
 ![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/15bdc6a5-1d3a-43e7-ab95-1deb9980df7c)
 
+For Placement: Command to run is "detailed_placement"
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/88fb3ff1-7ad9-4472-b70c-ee281b5580db)
+
+PD network generation :
+
+   gen_pdn
+   
+   ![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/415aadc8-ea59-42fd-a0a2-378cb00aeef4)
+
+Routing :
+
+   run_routing
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/b2d68932-8b44-41c8-8772-ae065edc142f)
+
+#### Labs steps to configure openSTA for post-synthesis analysis
+
 
 
 
