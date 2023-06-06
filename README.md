@@ -776,7 +776,7 @@ Routing :
 
 ![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/b2d68932-8b44-41c8-8772-ae065edc142f)
 
-#### Labs steps to configure openSTA for post-synthesis analysis
+
 
 
 
