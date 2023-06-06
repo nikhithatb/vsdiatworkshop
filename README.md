@@ -777,6 +777,69 @@ Routing :
 ![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/b2d68932-8b44-41c8-8772-ae065edc142f)
 
 
+### Post-synthesis timing analysis Using OpenSTA
+
+Timing analysis using the OpenSTA tool is typically performed outside the openLANE flow. To initiate the STA analysis, you would invoke OpenSTA with the pre_sta.conf configuration file, 
+
+sta pre_sta.conf
+
+During the placement stage of the design flow, the clock is assumed to be ideal, as it is propagated only once Clock Tree Synthesis (CTS) is performed. Therefore, before CTS, only setup slack is considered in the analysis.
+
+Setup time refers to the minimum time required for the data to stabilize before the active edge of the clock so that it can be correctly captured.
+
+Setup slack is calculated as the data required time minus the data arrival time. It represents the available timing margin for the setup time.
+
+The clock is generated from a Phase-Locked Loop (PLL), which consists of built-in circuit elements and logic. Variations can occur in the clock generation process depending on the specific circuit. These variations collectively contribute to clock uncertainty. One such parameter is clock jitter, which refers to the deviation of the clock edge from its original position.
+
+Clock uncertainty encompasses various factors such as skew, jitter, and margin. Skew refers to the variation in arrival times of the clock signal at different points in the circuit. Jitter represents the uncertainty in the arrival time of the clock due to deviations from its expected position. Margin indicates the amount of tolerance or safety margin available in the timing analysis to account for various uncertainties and process variations.
+
+By analyzing the timing report, you can identify areas where slack can be improved. One approach to improving slack is upsizing the cells, which involves replacing them with higher drive strength cells. This modification can lead to significant changes in the slack, ultimately improving the timing performance of the design.
+
+Certainly! Here's a rewritten version of the information you provided:
+
+During the Clock Tree Synthesis (CTS) stage, the goal is to ensure that the clock reaches each clock pin from the clock source with minimum skew and insertion delay. This is achieved by implementing an H-tree structure using a midpoint strategy. Clock inverters or buffers are inserted in the clock path to balance skews.
+
+Before running the CTS in the TritonCTS tool, it's important to check if the slack was attempted to be reduced in a previous run. If so, the netlist may have been modified through cell replacement techniques. Therefore, the Verilog file needs to be updated using the "write_verilog" command. Following that, the synthesis, floorplan, and placement stages are rerun.
+
+### To execute the CTS, the following command is used:
+
+run_cts
+
+After the CTS run, the slack values are obtained. For example:
+
+Setup slack: 4.33
+Hold slack: 0.25
+
+Once the clock is propagated through the CTS stage, the subsequent timing analysis is performed with real clocks. This is done within the openlane flow using the OpenROAD tool.
+
+The following commands are used:
+
+openroad
+
+write_db pico_cts.db
+
+read_db pico_cts.db
+
+read_verilog /openLANE_flow/designs/picorv32a/runs/03-07_11-25/results/synthesis/picorv32a.synthesis_cts.v
+
+read_liberty $::env(LIB_SYNTH_COMPLETE)
+
+link_design picorv32a
+
+read_sdc /openLANE_flow/designs/picorv32a/src/my_base.sdc
+
+set_propagated_clock (all_clocks)
+
+report_checks -path_delay min_max -format full_clock_expanded -digits 4
+
+
+After performing the post-CTS timing analysis, the resulting slack values are obtained. For example:
+
+Setup slack: 4.0565
+Hold slack: -0.1673
+
+These slack values provide information about the timing margins in the design, where positive values indicate sufficient margin and negative values indicate violations.
+
 
 
 
