@@ -697,9 +697,73 @@ After doing this we need to create a lef file for this layout , for this open la
 
 ![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/225eaf4c-0eaa-4ea8-8228-ad57f2890a1b)
 
-when we open it we can see what all changes we did during port definition
+when we open it we can see what all changes we did during port definition. This is how lef file is written.
 
 ![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/92cfc8e5-07a6-450b-ba5c-c03b1c52d415)
+
+> Next step is to plug this lef file into picorv32. Before we do this we need to move the files into "src" folder to present all our design files in one location.
+
+> We have to include our custom cell into the openlane flow. The first step is "Synthesis". For this we need to have a library that has our "cell definition".
+
+For STA analysis we require three libraries where pmos and nmos work in different corners depending on the tepmperature. There are slow(SS), fast(FF) and typical corners(TT). The tool should map the vsd cell during  the synthesis.
+
+> Now we should copy these libs into the src folder under picorv32a design
+ 
+ ![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/0102b41c-7492-4c83-9ac7-5cc79a0e8f50)
+ 
+ > We need to modify config.tcl file before performing synthesis.
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/29e85476-f029-448a-9521-4e269ab044ea)
+
+> Invoke the docker and run the design in interactive mode by giving "prep -design picorv32a -tag 31-05_18-34 -overwrite"
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/e3993b48-1484-42ba-94a0-99360f65d726)
+
+> Next invoke the lefs in the openlane by giving the following commands
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/41cbc969-a49f-4db9-b9d6-e97ba1e25ffb)
+`
+> Running synthesis - After running synthesis the slack obtained is -23.89ns.
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/bbdecf9c-9aab-4597-8223-1611840c39d7)
+
+#### Synthesis settings to fix slack
+
+> Copy the chip area into a notepad and now we will balance between area and delay by changing the strategy in the README.md file under configuration directory.
+ 
+  To check the strategy "echo $::env (SYNTH_STRATEGY)
+  
+  To set the strategy "set ::env (SYNTH_STRATEGY) 1" to 1 will increase the area a little but the timing should improve
+  
+  ![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/ceacc4ac-b51a-4495-a113-2811f20bcdd3)
+
+> ![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/0f760869-1db0-45d9-82f4-a90ff6d16d7f)
+
+> Now let us see what the driving cell is in the configuration directory "README.md" file. 
+
+> Run synthesis again to check if the slack gets reduced or not.
+
+> After the slack gets reduced, run floorplan by typing "run_floorplan"
+
+> After running all these commands
+Floor plan stage:
+
+   init_floorplan
+   
+   place_io
+   
+   global_placement_or
+   
+   tap_decap_or
+   
+   we get
+
+![image](https://github.com/nikhithatb/vsdiatworkshop/assets/135085619/15bdc6a5-1d3a-43e7-ab95-1deb9980df7c)
+
+
+
+
+
 
 
 
